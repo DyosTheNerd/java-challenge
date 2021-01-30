@@ -1,0 +1,420 @@
+{
+	"info": {
+		"_postman_id": "9427a112-fec1-40ac-9b8d-9b75ac19bae1",
+		"name": "EmployeeApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "AddEmployee",
+			"item": [
+				{
+					"name": "Create Employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"pm.globals.set(\"test-happypath\",jsonData.id);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"department\": \"string\",\"name\": \"string\",\"salary\": 0}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/employees",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"employees"
+							],
+							"query": [
+								{
+									"key": "employee",
+									"value": "{\n  \"department\": \"string\",\n  \"name\": \"string\",\n  \"salary\": 0\n}",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list Employees",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/employees/?page=1&size=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"employees",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "size",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Single Entry",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"pm.test(\"was updated name\", function() { \r",
+									"    pm.expect(jsonData.name).to.be.an('string').that.equals(\"string\"); \r",
+									"});\r",
+									"\r",
+									"pm.test(\"dept was updated\", function() { \r",
+									"    pm.expect(jsonData.department).to.be.a('string').that.equals(\"string\"); \r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/employees/{{test-happypath}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"employees",
+								"{{test-happypath}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Employee Copy",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"department\": \"newDept\",\"name\": \"newName\",\"salary\": 0}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/employees/{{test-happypath}}/0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"employees",
+								"{{test-happypath}}",
+								"0"
+							],
+							"query": [
+								{
+									"key": "employee",
+									"value": "{\n  \"department\": \"string\",\n  \"name\": \"string\",\n  \"salary\": 0\n}",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Single Entry Again",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"pm.test(\"was updated name\", function() { \r",
+									"    pm.expect(jsonData.name).to.be.an('string').that.equals(\"newName\"); \r",
+									"});\r",
+									"\r",
+									"pm.test(\"dept was updated\", function() { \r",
+									"    pm.expect(jsonData.department).to.be.a('string').that.equals(\"newDept\"); \r",
+									"});\r",
+									"\r",
+									"pm.test(\"version\", function() { \r",
+									"    pm.expect(jsonData.version).to.be.a('number').that.equals(1); \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/employees/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"employees",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ExceptionTest",
+			"item": [
+				{
+					"name": "get Single Entry Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"pm.test(\"has one feedback\", function() { \r",
+									"    pm.expect(jsonData.exception).to.be.an('string').that.equals(\"Resource of type Employee with ID -2 not found.\"); \r",
+									"});\r",
+									"\r",
+									"pm.test(\"feedback text correct\", function() { \r",
+									"    pm.expect(jsonData.url).to.be.a('string').that.equals(\"http://localhost:8080/api/v1/employees/-2\"); \r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/employees/-2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"employees",
+								"-2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Add And Update Wrong Version",
+			"item": [
+				{
+					"name": "Create Employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"pm.globals.set(\"test-wrongVersion\",jsonData.id);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"department\": \"string\",\"name\": \"string\",\"salary\": 0}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/employees",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"employees"
+							],
+							"query": [
+								{
+									"key": "employee",
+									"value": "{\n  \"department\": \"string\",\n  \"name\": \"string\",\n  \"salary\": 0\n}",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update Employee wrong version",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"pm.test(\"has one feedback\", function() { \r",
+									"    pm.expect(jsonData.exception).to.be.an('string').that.equals(\"Wrong resource version for the request on Employee with ID \"+ pm.globals.get(\"test-wrongVersion\") + \".\"); \r",
+									"});\r",
+									"\r",
+									"pm.test(\"feedback text correct\", function() { \r",
+									"    pm.expect(jsonData.url).to.be.a('string').that.equals(\"http://localhost:8080/api/v1/employees/\" + pm.globals.get(\"test-wrongVersion\") + \"/-2\"); \r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"department\": \"stringnewest\",\"name\": \"stringnewest\",\"salary\": 200}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/employees/{{test-wrongVersion}}/-2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"employees",
+								"{{test-wrongVersion}}",
+								"-2"
+							],
+							"query": [
+								{
+									"key": "employee",
+									"value": "{\n  \"department\": \"string\",\n  \"name\": \"string\",\n  \"salary\": 0\n}",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "password",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "admin",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
