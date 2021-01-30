@@ -1,7 +1,6 @@
 package jp.co.axa.apidemo.controllers;
 
 import io.swagger.annotations.ApiOperation;
-import io.swagger.v3.oas.annotations.Operation;
 import jp.co.axa.apidemo.dto.EmployeeDTO;
 import jp.co.axa.apidemo.dto.EmployeeReturnDTO;
 import jp.co.axa.apidemo.dto.ResourceHeaderDTO;

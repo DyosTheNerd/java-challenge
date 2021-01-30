@@ -123,6 +123,60 @@ public class EmployeeControllerTest {
     }
 
 
+    @Test
+    public void testValidationSalaryNot0() throws Exception {
 
+        when(service.saveEmployee(any(EmployeeDTO.class))).thenReturn(new ResourceHeaderDTO());
+
+        mockMvc.perform(post("/api/v1/employees/").contentType("application/json").content("{\"department\": \"dept\",\"name\": \"thename\",\"salary\": 0}")).andExpect(MockMvcResultMatchers.status().is(409));
+
+    }
+
+    @Test
+    public void testValidationSalaryNotNegative() throws Exception {
+
+        when(service.saveEmployee(any(EmployeeDTO.class))).thenReturn(new ResourceHeaderDTO());
+
+        mockMvc.perform(post("/api/v1/employees/").contentType("application/json").content("{\"department\": \"dept\",\"name\": \"thename\",\"salary\": -1000}")).andExpect(MockMvcResultMatchers.status().is(409));
+
+    }
+
+    @Test
+    public void testValidationNameTooShort() throws Exception {
+
+        when(service.saveEmployee(any(EmployeeDTO.class))).thenReturn(new ResourceHeaderDTO());
+
+        mockMvc.perform(post("/api/v1/employees/").contentType("application/json").content("{\"department\": \"dept\",\"name\": \"\",\"salary\": -1000}")).andExpect(MockMvcResultMatchers.status().is(409));
+
+    }
+
+
+    @Test
+    public void testValidationDeptTooShort() throws Exception {
+
+        when(service.saveEmployee(any(EmployeeDTO.class))).thenReturn(new ResourceHeaderDTO());
+
+        mockMvc.perform(post("/api/v1/employees/").contentType("application/json").content("{\"department\": \"\",\"name\": \"Somename\",\"salary\": 1000}")).andExpect(MockMvcResultMatchers.status().is(409));
+
+    }
+
+    @Test
+    public void testValidationNameTooLong() throws Exception {
+
+        when(service.saveEmployee(any(EmployeeDTO.class))).thenReturn(new ResourceHeaderDTO());
+
+        mockMvc.perform(post("/api/v1/employees/").contentType("application/json").content("{\"department\": \"dept\",\"name\": \"when(service.saveEmployee(any(EmployeeDTO.class))when(service.saveEmployee(any(EmployeeDTO.class))\",\"salary\": -1000}")).andExpect(MockMvcResultMatchers.status().is(409));
+
+    }
+
+
+    @Test
+    public void testValidationDeptTooLong() throws Exception {
+
+        when(service.saveEmployee(any(EmployeeDTO.class))).thenReturn(new ResourceHeaderDTO());
+
+        mockMvc.perform(post("/api/v1/employees/").contentType("application/json").content("{\"department\": \"when(service.saveEmployee(any(EmployeeDTO.class))when(service.saveEmployee(any(EmployeeDTO.class))\",\"name\": \"Somename\",\"salary\": 1000}")).andExpect(MockMvcResultMatchers.status().is(409));
+
+    }
 
 }
