@@ -39,9 +39,10 @@ public class ApplicationConfiguration {
     }
 
 
-
-
-
+    /**
+     * initial implementation of security roles. To be replaced with a proper user management solution
+     * @return
+     */
     @Bean
     public UserDetailsService myUserDetailsService() {
 
@@ -68,6 +69,11 @@ public class ApplicationConfiguration {
     }
 
 
+    /**
+     * This Bean configures logging the incoming requests.
+     *
+     * @return bean with logging configuration
+     */
     @Bean
     public CommonsRequestLoggingFilter requestLoggingFilter() {
         CommonsRequestLoggingFilter loggingFilter = new CommonsRequestLoggingFilter();

@@ -28,18 +28,32 @@ public class EmployeeServiceImpl  extends BaseService implements EmployeeService
     private EmployeeRepository employeeRepository;
 
 
-
-
+    /**
+     * Retrieves a Page of employees, ordered by id.
+     * @param page the page number
+     * @param size the page size
+     * @return The Pageable List of Employees
+     */
     public Page<Employee> retrieveEmployees(int page, int size) {
         Pageable pageable = PageRequest.of(page,size);
         return employeeRepository.findAll(pageable);
     }
 
+    /**
+     * Get an Employee of ID.
+     * @param employeeId the ID of the Employee
+     * @return A DTO representing the Employee.
+     */
     @Cacheable("employee")
     public EmployeeReturnDTO getEmployee(Long employeeId) {
         return getDTOFromEntity(getEmployeeEntity(employeeId));
     }
 
+    /**
+     * save a new employee object. no duplication check is performed.
+     * @param employee the information to be stored.
+     * @return The header information of the new object.
+     */
     public ResourceHeaderDTO saveEmployee(EmployeeDTO employee){
         Employee newObject = getEntityFromDTO(employee);
         newObject.setVersion(0);

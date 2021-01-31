@@ -34,8 +34,7 @@ What could be improved?
     - remove h2 access
 - use a different db
     - h2 in memory is nice for development, but insufficient for most production usecases. 
-
-- 
+- hateoas implementation to have an explorable api.
 
 - more testing: added a small postman collection, but more system tests could be done.
 
